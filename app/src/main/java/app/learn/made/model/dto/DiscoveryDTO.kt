@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class RecoveryDTO(
+data class DiscoveryDTO(
     val adult: Boolean,
 
     @SerializedName("backdrop_path")

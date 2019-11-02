@@ -2,6 +2,7 @@ package app.learn.made.koin
 
 import android.util.Log
 import app.learn.made.BuildConfig
+import app.learn.made.network.ApiKeyInterceptor
 import app.learn.made.network.MovieClientService
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -13,16 +14,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val networkModule = module {
     single { createOkHttpClient() }
-    single { getApiKey() }
     factory { apiService<MovieClientService>(get(), BuildConfig.BASE_URL) }
 }
 
 fun createOkHttpClient(): OkHttpClient {
+    val apiKeyInterceptor = ApiKeyInterceptor()
     val httpInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-        Log.e("football club", it)
+        Log.e("iMovie", it)
     })
     httpInterceptor.level = HttpLoggingInterceptor.Level.BASIC
-    return OkHttpClient.Builder().addInterceptor(httpInterceptor).build()
+    return OkHttpClient.Builder().addInterceptor(apiKeyInterceptor).addInterceptor(httpInterceptor).build()
 }
 
 inline fun <reified T> apiService(okHttpClient: OkHttpClient, url: String): T {
@@ -35,5 +36,3 @@ inline fun <reified T> apiService(okHttpClient: OkHttpClient, url: String): T {
 
     return retrofit.create(T::class.java)
 }
-
-fun getApiKey(): String = BuildConfig.API_KEY

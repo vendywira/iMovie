@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape
+               android:innerRadius="0dp"
+               android:shape="ring"
+               android:thickness="15dp"
+               android:thicknessRatio="20.0"
+               android:useLevel="false">
+            <solid android:color="#0A0A0A" />
+            <padding android:bottom="0dp"
+                     android:left="2dp"
+                     android:right="2dp"
+                     android:top="0dp"/>
+        </shape>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <shape
+                android:innerRadiusRatio="2.5"
+                android:shape="ring"
+                android:thicknessRatio="20.0"
+                android:thickness="2dp"
+                android:useLevel="true">
+
+            <solid android:color="#E91E63" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <rotate
+                android:fromDegrees="270"
+                android:pivotX="50%"
+                android:pivotY="50%"
+                android:toDegrees="270">
+
+            <shape
+                    android:innerRadiusRatio="2.5"
+                    android:shape="ring"
+                    android:thicknessRatio="20.0"
+                    android:thickness="2dp"
+                    android:useLevel="true">
+
+
+                <rotate
+                        android:fromDegrees="0"
+                        android:pivotX="50%"
+                        android:pivotY="50%"
+                        android:toDegrees="360" />
+
+                <gradient
+                        android:centerColor="#00FF00"
+                        android:endColor="#00FF00"
+                        android:startColor="#00FF00"
+                        android:type="sweep" />
+
+            </shape>
+        </rotate>
+    </item>
+</layer-list>
