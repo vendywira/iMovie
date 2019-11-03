@@ -6,6 +6,8 @@ import android.os.Parcel
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import app.learn.made.R
 import com.bumptech.glide.Glide
@@ -101,7 +103,7 @@ fun dateFormatting(dateEvent: Date?): String {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun timeFormating(time: String): String? {
+fun timeFormatting(time: String): String? {
     return try {
         val localeId = Locale("in", "ID")
         SimpleDateFormat("hh:mm:ssXXX").parse(time)
@@ -136,3 +138,4 @@ object ModelMapperUtils {
     }
 
 }
+

@@ -5,12 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/movie_progress"
-        android:foregroundGravity="center_horizontal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_fileName="loading.json"/>
+            android:id="@+id/movie_progress"
+            android:foregroundGravity="center_horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:clickable="true"
+            app:lottie_fileName="loading.json"
+            android:focusable="true"/>
 </FrameLayout>

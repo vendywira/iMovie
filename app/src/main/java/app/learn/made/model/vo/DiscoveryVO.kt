@@ -1,5 +1,9 @@
 package app.learn.made.model.vo
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class DiscoveryVO (
     var id: Int?,
     var overview: String?,
@@ -7,6 +11,6 @@ data class DiscoveryVO (
     var releaseDate: String?,
     var title: String?,
     var voteAverage: Double?
-) {
+) : Parcelable {
     constructor() : this(null, null, null, null, null, null)
 }

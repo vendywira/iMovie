@@ -2,21 +2,21 @@ package app.learn.made.feature.discovery.list
 
 import app.learn.made.base.impl.BasePresenterImpl
 import app.learn.made.base.service.BaseView
-import app.learn.made.model.constant.ErrorMessage.Companion.ERROR_GET_DISCOVERY_MOVIE
+import app.learn.made.model.constant.ErrorMessage.Companion.ERROR_HTTP_GET_MOVIE
 import app.learn.made.network.MovieClientService
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class DiscoveryPresenter(private val apiClient: MovieClientService)
-    : BasePresenterImpl(), DiscoveryListService.Presenter {
+    : BasePresenterImpl(), DiscoveryService.Presenter {
 
-    lateinit var view: DiscoveryListService.View
+    lateinit var view: DiscoveryService.View
 
     override fun <T : BaseView> setupView(view: T) {
-        this.view = view as DiscoveryListService.View
+        this.view = view as DiscoveryService.View
     }
 
-    override fun getDiscoveryList(sortBy: String) {
-        super.addDisposable(apiClient.getDiscoveryMovies(sortBy)
+    override fun getDiscoveryList(sortBy: String, page: Int) {
+        super.addDisposable(apiClient.getDiscoveryMovies(sortBy, page)
             .doOnSubscribe {
                 view.showLoading()
             }
@@ -24,7 +24,7 @@ class DiscoveryPresenter(private val apiClient: MovieClientService)
                 view.hideLoading()
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { view.showMessage(ERROR_GET_DISCOVERY_MOVIE) }
+            .doOnError { view.showMessage(ERROR_HTTP_GET_MOVIE) }
             .subscribe {
                 view.showDiscoveryList(it)
             })

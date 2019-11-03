@@ -36,9 +36,11 @@ abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(),
 
     override fun showLoading() {
         getProgressBar()?.visible()
+        getSwipeRefresh()?.isRefreshing = false
     }
 
     override fun hideLoading() {
         getProgressBar()?.invisible()
+        getSwipeRefresh()?.isRefreshing = false
     }
 }

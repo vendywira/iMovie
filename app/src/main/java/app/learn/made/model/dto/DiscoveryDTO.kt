@@ -1,10 +1,7 @@
 package app.learn.made.model.dto
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class DiscoveryDTO(
     val adult: Boolean,
 
@@ -40,4 +37,4 @@ data class DiscoveryDTO(
 
     @SerializedName("vote_count")
     val voteCount: Int
-) : Parcelable
+)

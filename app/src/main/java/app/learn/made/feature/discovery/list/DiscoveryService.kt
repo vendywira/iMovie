@@ -5,13 +5,12 @@ import app.learn.made.base.service.BaseView
 import app.learn.made.model.dto.DiscoveryDTO
 import app.learn.made.model.dto.ListResponse
 
-class DiscoveryListService {
+class DiscoveryService {
     interface Presenter : BasePresenter {
-
-        fun getDiscoveryList(sortBy: String)
+        fun getDiscoveryList(sortBy: String, page: Int)
     }
 
     interface View : BaseView {
-        fun showDiscoveryList(teamResponse: ListResponse<DiscoveryDTO>?)
+        fun showDiscoveryList(discoveryResponse: ListResponse<DiscoveryDTO>?)
     }
 }

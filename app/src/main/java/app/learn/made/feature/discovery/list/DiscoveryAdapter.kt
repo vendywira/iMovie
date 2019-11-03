@@ -9,35 +9,62 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.learn.made.BuildConfig
 import app.learn.made.R
+import app.learn.made.base.impl.BaseViewHolder
 import app.learn.made.helper.dateFormatting
 import app.learn.made.helper.loadImageUrl
-import app.learn.made.helper.timeFormating
 import app.learn.made.model.constant.Constant
 import app.learn.made.model.vo.DiscoveryVO
 import org.jetbrains.anko.find
 
 class DiscoveryAdapter(
-    private val listOfMovies: List<DiscoveryVO>,
+    private var listOfMovies: List<DiscoveryVO>,
+    private var listViewType: List<Int>,
     private val onClick: (position: Int) -> Unit
-) : RecyclerView.Adapter<DiscoveryAdapter.Holder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        return Holder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_list_discovery, parent, false)
-        )
+) : RecyclerView.Adapter<BaseViewHolder>() {
+
+    companion object {
+        val ITEM_VIEW_TYPE_CONTENT = 1
+        val ITEM_VIEW_TYPE_LOADING = 2
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            ITEM_VIEW_TYPE_CONTENT -> ViewHolderContent(
+                layoutInflater.inflate(R.layout.item_list_discovery, null)
+            )
+            else -> ViewHolderLoading(
+                layoutInflater.inflate(R.layout.empty_resource, null)
+            )
+        }
     }
 
     override fun getItemCount(): Int = listOfMovies.size
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bindItem(listOfMovies[position])
-        holder.itemView.setOnClickListener {
-            onClick(position)
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        val viewType = listViewType[position]
+        val data = listOfMovies[position]
+        when (viewType) {
+            ITEM_VIEW_TYPE_CONTENT -> {
+                val vh = holder as ViewHolderContent
+                vh.bindItem(data)
+                vh.itemView.setOnClickListener {
+                    onClick(position)
+                }
+            }
         }
+
     }
 
+    override fun getItemViewType(position: Int): Int = listViewType[position]
 
-    class Holder(view: View) : RecyclerView.ViewHolder(view) {
+    fun refresh(listOfMovies: List<DiscoveryVO>, listViewType: List<Int>) {
+        this.listOfMovies = listOfMovies
+        this.listViewType = listViewType
+        notifyDataSetChanged()
+    }
+
+    inner class ViewHolderContent(view: View) : BaseViewHolder(view) {
 
         private val tvTitle: TextView = view.find(R.id.movie_title)
         private val tvReleaseDate: TextView = view.find(R.id.movie_release)
@@ -61,6 +88,12 @@ class DiscoveryAdapter(
             }
 
         }
+
+        override fun clear() {}
+
     }
 
+    inner class ViewHolderLoading(view: View) : BaseViewHolder(view) {
+        override fun clear() {}
+    }
 }

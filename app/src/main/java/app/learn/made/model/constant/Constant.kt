@@ -2,6 +2,8 @@ package app.learn.made.model.constant
 
 class Constant {
     companion object {
+        const val DISCOVERY_INTENT = "discovery_intent"
+        const val MAX_CAROUSEL_LENGTH = 5
         const val MAX_WORD_CHAR = 200
         const val LANGUAGE = "en-US"
         val SORT_BY_IDS = listOf("popularity.asc", "popularity.desc", "release_date.asc",

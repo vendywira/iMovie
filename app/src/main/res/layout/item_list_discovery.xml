@@ -32,7 +32,7 @@
                 android:id="@+id/movie_title"
                 app:layout_constraintTop_toTopOf="@+id/rating_bar"
                 app:layout_constraintLeft_toRightOf="@+id/rating_bar"
-                tools:text="Creed Assasin"
+                tools:text="Creed"
                 android:textStyle="bold"
                 android:textSize="@dimen/text_large"
                 android:layout_margin="5dp"
