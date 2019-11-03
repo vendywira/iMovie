@@ -57,11 +57,11 @@ class ReviewAdapter(
     inner class ViewHolderContent(view: View) : BaseViewHolder(view) {
 
         private val tvAuthor: TextView = view.find(R.id.review_author)
-        private val tvreviewContent: TextView = view.find(R.id.review_content)
+        private val tvReviewContent: TextView = view.find(R.id.review_content)
 
         fun bindItem(movie: MovieReviewVO) {
             tvAuthor.text = movie.author
-            tvreviewContent.text = movie.content
+            tvReviewContent.text = movie.content
         }
 
         override fun clear() {}
