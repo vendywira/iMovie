@@ -78,7 +78,7 @@ class DiscoveryActivity : BaseActivity<DiscoveryService.Presenter>(), DiscoveryS
         presenter.setupView(this)
         setContentView(app.learn.made.R.layout.activity_discovery)
         isLoading = false
-        listViewType = ArrayList()
+        listViewType = mutableListOf()
         rv = rv_movie
         sr = sr_movie
         progressBar = movie_progress
@@ -103,34 +103,6 @@ class DiscoveryActivity : BaseActivity<DiscoveryService.Presenter>(), DiscoveryS
                 if (!isLoading && isLastPosition && page <= totalPage?:1) {
                     isLoading = true
                     presenter.getDiscoveryList(Constant.SORT_BY_IDS[sortBy.selectedItemPosition], page++)
-//                    doAsync {
-//                        val lenTemp = listOfMovies.size - 1
-//                        repeat(10) { a ->
-//                            val lastValue: Int = when (a) {
-//                                0 -> {
-//                                    listData[listData.size - 2].toInt()
-//                                }
-//                                else -> {
-//                                    listData[listData.size - 1].toInt()
-//                                }
-//                            }
-//                            listOfMovies.add(lastValue.plus(1).toString())
-//                            listViewType.add(DiscoveryAdapter.ITEM_VIEW_TYPE_CONTENT)
-//                        }
-//                        Thread.sleep(1000 * 10)
-//                        uiThread {
-//                            listOfMovies.removeAt(lenTemp)
-//                            listViewType.removeAt(lenTemp)
-//
-//                            if (countLoadMore + 1 < 3) {
-//                                listOfMovies.add(DiscoveryVO())
-//                                listViewType.add(DiscoveryAdapter.ITEM_VIEW_TYPE_LOADING)
-//                            }
-//                            discoveryAdapter.refresh(listOfMovies, listViewType)
-//                            countLoadMore += 1
-//                            isLoading = false
-//                        }
-//                    }
                 }
             }
         })

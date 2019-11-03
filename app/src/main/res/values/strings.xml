@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">iMovie</string>
     <string name="more_info">More Info</string>
+    <string name="tab_title_detail">Movie Detail</string>
+    <string name="tab_title_review">Movie Review</string>
 </resources>

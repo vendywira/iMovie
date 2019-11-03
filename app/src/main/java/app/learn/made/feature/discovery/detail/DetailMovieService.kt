@@ -15,6 +15,6 @@ class DetailMovieService {
     interface View : BaseView {
         fun showImagesCarousel(images: MovieImagesDTO)
 
-        fun showMovieDetail(discoveryResponse: MovieDetailDTO)
+        fun showMovieDetail(movieDetail: MovieDetailDTO)
     }
 }

@@ -1,26 +1,31 @@
 package app.learn.made.feature.discovery.detail
 
-import android.R
+import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager.widget.ViewPager
 import app.learn.made.BuildConfig
 import app.learn.made.base.impl.BaseActivity
+import app.learn.made.base.impl.BasePagerAdapter
+import app.learn.made.feature.discovery.overview.OverviewMovieFragment
+import app.learn.made.feature.discovery.review.ReviewFragment
 import app.learn.made.helper.loadImageUrl
 import app.learn.made.helper.mapper
 import app.learn.made.model.constant.Constant
+import app.learn.made.model.constant.TermConstant
 import app.learn.made.model.dto.MovieDetailDTO
 import app.learn.made.model.dto.MovieImagesDTO
 import app.learn.made.model.vo.DiscoveryVO
+import app.learn.made.model.vo.MovieDetailVO
 import app.learn.made.model.vo.MovieImageVO
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.tabs.TabLayout
 import com.synnapps.carouselview.CarouselView
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import kotlinx.android.synthetic.main.progress_bar.*
-import me.grantland.widget.AutofitTextView
-import org.jetbrains.anko.design.snackbar
 import org.koin.android.ext.android.inject
 
 
@@ -30,8 +35,10 @@ class DetailMovieActivity : BaseActivity<DetailMovieService.Presenter>(), Detail
     private lateinit var progressBar: LottieAnimationView
     private lateinit var carouselBackdrop: CarouselView
     private lateinit var discovery: DiscoveryVO
-    private lateinit var movieTitle: AutofitTextView
-    private lateinit var movieReleaseDate: AutofitTextView
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager
+    private lateinit var basePagerAdapter: BasePagerAdapter
+    private lateinit var movieDetail: MovieDetailVO
     private var listOfBackdrops = mutableListOf<MovieImageVO>()
 
 
@@ -86,8 +93,9 @@ class DetailMovieActivity : BaseActivity<DetailMovieService.Presenter>(), Detail
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showMovieDetail(discoveryResponse: MovieDetailDTO) {
-
+    override fun showMovieDetail(movieDetail: MovieDetailDTO) {
+        this.movieDetail = mapper.map(movieDetail, MovieDetailVO::class.java)
+        setTabLayout()
     }
 
     override fun showImagesCarousel(images: MovieImagesDTO) {
@@ -104,5 +112,27 @@ class DetailMovieActivity : BaseActivity<DetailMovieService.Presenter>(), Detail
             imageView.loadImageUrl(BuildConfig.API_POSTER_PATH.plus(listOfBackdrops[position].filePath))
         }
         carouselBackdrop.pageCount = listOfBackdrops.size
+    }
+
+    private fun setTabLayout() {
+        tabLayout = tabs_movie_detail
+        viewPager = vp_movie_detail
+        val movieOverview = OverviewMovieFragment()
+        val content = Bundle()
+        content.putString(Constant.MOVIE_OVERVIEW_INTENT, discovery.overview)
+        movieOverview.arguments = content
+
+        val reviewFragment = ReviewFragment()
+        val reviews = Bundle()
+        reviews.putInt(Constant.MOVIE_ID_INTENT, movieDetail.id?:0)
+        reviewFragment.arguments = reviews
+
+        basePagerAdapter = BasePagerAdapter(supportFragmentManager)
+        basePagerAdapter.let {
+            it.addFragment(TermConstant.TAB_DETAIL_MOVIE_TITLE, movieOverview)
+            it.addFragment(TermConstant.TAB_REVIEW_MOVIE_TITLE, reviewFragment)
+            viewPager.adapter = it
+            tabLayout.setupWithViewPager(viewPager)
+        }
     }
 }
